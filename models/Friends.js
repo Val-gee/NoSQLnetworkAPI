@@ -6,11 +6,6 @@ const friendSchema = new Schema (
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId
         },
-        friendName: {
-            type: String,
-            required: true,
-            trim: true,
-        },
         createdAt: {
             type: Date,
             default: Date.now() // Use a getter method to format the timestamp on query ??

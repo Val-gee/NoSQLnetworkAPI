@@ -29,10 +29,13 @@ router.route('/:userId')
     .delete(deleteUser);
 
 
+// /api/users/:userId/friends
+router.route('/:userId/friends')
+    // .post to add a new friend to users friend list
+    .post(addFriend);
+
 // /api/users/:userId/friends/:friendId
 router.route('/:userId/friends/:friendId')
-    // .post to add a new friend to users friend list
-    .post(addFriend)
     // .delete to remove a friend from a users friend list
     .delete(deleteFriend);
 

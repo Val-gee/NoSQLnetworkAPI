@@ -13,13 +13,11 @@ module.exports = {
         console.log('GET /api/users')
 
         User.find({})
+        .select('-__v')
             .then(async (users) => {
                 console.log(users);
-                const userObj = {
-                    users,
-                    friendCount: await friendCount(req.params.userId),
-                };
-                return res.json(userObj)
+                
+                return res.json(users)
             })
             .catch((err) => {
                 console.log(err);
@@ -83,7 +81,7 @@ module.exports = {
             .then((user) =>
                 !user
                     ? res.status(404).json({ message: 'No user with this id!' })
-                    : Thought.deleteMany({ _id: { $in: user.thoughts } })
+                    : res.json("User was successfully deleted!")
             )
             .catch((err) => {
                 console.log(err);
@@ -92,7 +90,7 @@ module.exports = {
     },
     //create friend
     addFriend(req, res) {
-        console.log('POST /api/users/:userId/friends/:friendId');
+        console.log('POST /api/users/:userId/friend');
         console.log('You are adding a friend!');
         console.log(req.body);
 
@@ -113,11 +111,11 @@ module.exports = {
     },
     //delete friend
     deleteFriend(req, res) {
-        console.log('POST /api/users/:userId/friends/:friendId');
+        console.log('Delete /api/users/:userId/friends/:friendId');
 
-        User.findOneAndDelete(
+        User.findOneAndUpdate(
             { _id: req.params.userId },
-            { $pull: { friends: { friendId: { $in: [req.params.friendId] } } } },
+            { $pull: { friends: { _id: req.params.friendId } } },
             { runValidators: true, new: true }
         )
             .then((user) =>

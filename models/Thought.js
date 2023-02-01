@@ -23,7 +23,8 @@ const thoughtSchema = new Schema(
         toJSON: {
             getters: true, // connected to line 14?
             virtuals: true
-        }
+        },
+        id: false
     }
 );
 
